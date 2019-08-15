@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.UserMapper">
+    <select id="queryList" resultType="com.example.pojo.User">
+            SELECT u.id, u.username, u.password, u.phone, u.created FROM tb_user u
+        </select>
+
+    <select id="queryById" resultType="com.example.pojo.User">
+            SELECT u.id, u.username, u.password, u.phone, u.created FROM tb_user u where u.id = #{id}
+        </select>
+
+    <select id="queryByName" resultType="com.example.pojo.User">
+            SELECT u.id, u.username, u.password, u.phone, u.created FROM tb_user u where u.username = #{username}
+        </select>
+
+    <insert id="save">
+            insert into tb_user(username, password,  phone, created)
+            values(#{username}, #{password}, #{email}, #{phone}, now())
+        </insert>
+
+    <update id="update">
+            update tb_user set username = #{username}, password = #{password},phone = #{phone},created = now() where id = #{id}
+        </update>
+
+    <delete id="batchDelete">
+        delete from tb_user where id in
+        <foreach collection="array" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <!-- <delete id="delUsers">
+        delete from t_user where id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete> -->
+</mapper>
